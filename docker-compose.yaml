@@ -13,9 +13,9 @@ services:
    container_name: sqlserver
    healthcheck:
       test: ["CMD-SHELL", "sleep 60"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
+      interval: 1s
+      timeout: 60s
+      retries: 1
 
  products-api-image:
    image: tamilcodingwizard/ecommerce-products:v2.0
