@@ -22,7 +22,7 @@ services:
     ports:
       - "8080:8080"
       - "8081:8081"
-    entrypoint: ["sh", "-c", "sleep 30 && tail -f /dev/null"]
+    entrypoint: ["sh", "-c", "sleep 30 && exec $(cat /proc/1/cmdline)"]
     depends_on:
       - mssql-image
 
