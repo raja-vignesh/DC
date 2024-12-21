@@ -1,37 +1,31 @@
 version: '3.8'
 services:
- msssql-image:
-   image: tamilcodingwizard/productsdb:v1.0
-   environment:
+  mssql-image:
+    image: tamilcodingwizard/productsdb:v1.0
+    environment:
       MSSQL_SA_PASSWORD: Admin1234!
       ACCEPT_EULA: Y
-   ports:
+    ports:
       - "1433:1433"
-   networks:
+    networks:
       - products_nw
-   hostname: sqlserver
-   container_name: sqlserver
-   healthcheck:
-      test: ["CMD-SHELL", "sleep 30"]
-      interval: 1s
-      timeout: 30s
-      retries: 1
+    hostname: sqlserver
+    container_name: sqlserver
 
- products-api-image:
-   image: tamilcodingwizard/ecommerce-products:v2.0
-   environment:
-     MSSQL_Pwd: Admin1234!
-     MSSQL_Server: sqlserver
-   networks:
+  products-api-image:
+    image: tamilcodingwizard/ecommerce-products:v2.0
+    environment:
+      MSSQL_Pwd: Admin1234!
+      MSSQL_Server: sqlserver
+    networks:
       - products_nw
-   ports:
+    ports:
       - "8080:8080"
       - "8081:8081"
-   depends_on:
-      msssql-image:
-        condition: service_healthy
-   
+    entrypoint: ["sh", "-c", "sleep 30 && tail -f /dev/null"]
+    depends_on:
+      - mssql-image
+
 networks:
- products_nw:
-  driver: bridge
- 
+  products_nw:
+    driver: bridge
