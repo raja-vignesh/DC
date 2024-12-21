@@ -12,9 +12,9 @@ services:
    hostname: sqlserver
    container_name: sqlserver
    healthcheck:
-      test: ["CMD-SHELL", "sleep 60"]
+      test: ["CMD-SHELL", "sleep 30"]
       interval: 1s
-      timeout: 60s
+      timeout: 30s
       retries: 1
 
  products-api-image:
