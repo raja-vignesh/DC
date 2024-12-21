@@ -11,6 +11,12 @@ services:
       - products_nw
    hostname: sqlserver
    container_name: sqlserver
+   healthcheck:
+      test: ["CMD-SHELL", "echo 'SELECT 1' | /opt/mssql-tools/bin/sqlcmd -S localhost -U sa -P Admin1234!"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+
  products-api-image:
    image: tamilcodingwizard/ecommerce-products:v2.0
    environment:
@@ -21,6 +27,10 @@ services:
    ports:
       - "8080:8080"
       - "8081:8081"
+   depends_on:
+      msssql-image:
+        condition: service_healthy
+   
 networks:
  products_nw:
   driver: bridge
