@@ -27,7 +27,7 @@ services:
   postgres-container:
     image: postgres:16.1
     environment:
-      - POSTGRES_PASSWORD=1234
+      - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=postgres
       - POSTGRES_DB=Users
     ports:
@@ -35,7 +35,7 @@ services:
     networks:
       - ecommerce_nw
     volumes:
-      - ./DC/postgres-init:/docker-entrypoint-initdb.d
+      - ./postgres-init:/docker-entrypoint-initdb.d
     
   users-api-image:
     image: tamilcodingwizard/ecommerce-users:v1.0
@@ -43,7 +43,7 @@ services:
       - "9090:9090"
     environment:
       - HOST_NAME=postgres-container
-      - HOST_PASSWORD=1234
+      - HOST_PASSWORD=admin
     networks:
       - ecommerce_nw
 
