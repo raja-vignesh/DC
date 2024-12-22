@@ -29,7 +29,7 @@ services:
     environment:
       - POSTGRES_PASSWORD=admin
       - POSTGRES_USER=postgres
-      - POSTGRES_DB=Users
+      - POSTGRES_DB=eCommerceUsers
     ports:
       - "5432:5432"
     networks:
