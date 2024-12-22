@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  mssql-image:
+  mssql-container-image:
     image: tamilcodingwizard/productsdb:v1.0
     environment:
       MSSQL_SA_PASSWORD: Admin1234!
@@ -8,7 +8,7 @@ services:
     ports:
       - "1433:1433"
     networks:
-      - products_nw
+      - ecommerce_nw
     hostname: sqlserver
     container_name: sqlserver
 
@@ -18,13 +18,36 @@ services:
       MSSQL_Pwd: Admin1234!
       MSSQL_Server: sqlserver
     networks:
-      - products_nw
+      - ecommerce_nw
     ports:
       - "8080:8080"
       - "8081:8081"
     restart: on-failure
 
+  postgres-container:
+    image: postgres:16.1
+    environment:
+      - POSTGRES_PASSWORD=1234
+      - POSTGRES_USER=Admin
+      - POSTGRES_DB=Users
+    ports:
+      "5432:5432"
+    networks:
+      - ecommerce_nw
+    volumes:
+      - ./DC/postgres-init:/docker-entrypoint-initdb.d
+    
+  users-api-image:
+    image: tamilcodingwizard/ecommerce-users:v1.0
+    ports:
+      - "9090:9090"
+    environment:
+      - HOST_NAME=postgres-container
+      - HOST_PASSWORD=1234
+    networks:
+      - ecommerce_nw
+
 networks:
-  products_nw:
+  ecommerce_nw:
     driver: bridge
 
