@@ -31,7 +31,7 @@ services:
       - POSTGRES_USER=Admin
       - POSTGRES_DB=Users
     ports:
-      "5432:5432"
+      - "5432:5432"
     networks:
       - ecommerce_nw
     volumes:
