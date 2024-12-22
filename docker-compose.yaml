@@ -1,6 +1,6 @@
 version: '3.8'
 services:
-  mssql-container-image:
+  mssql-container:
     image: tamilcodingwizard/productsdb:v1.0
     environment:
       MSSQL_SA_PASSWORD: Admin1234!
@@ -16,7 +16,7 @@ services:
     image: tamilcodingwizard/ecommerce-products:v2.0
     environment:
       MSSQL_Pwd: Admin1234!
-      MSSQL_Server: sqlserver
+      MSSQL_Server: mssql-container
     networks:
       - ecommerce_nw
     ports:
